@@ -1,0 +1,12 @@
+input:
+  - name: "websocket"
+    entrypoint: "websocket_widget.WebsocketWidget.start"
+    exitpoint: ""
+    next:
+      - "service:martial_arts"
+service:
+  - name: "martial_arts"
+    entrypoint: "martial_arts_service.martial_arts_service.MartialArtsService.run"
+    exitpoint: ""
+    next:
+      - "input:websocket|output_send"

@@ -1,0 +1,31 @@
+input:
+  - name: "camera"
+    entrypoint: "camera_widget.CameraWidget.start"
+    exitpoint: ""
+    next:
+      - "processing:sign_detector"
+  - name: "websocket"
+    entrypoint: "websocket_widget.WebsocketWidget.start"
+    exitpoint: ""
+    next:
+      - "service:template"
+processing:
+  - name: "sign_detector"
+    entrypoint: "sign_detector.SLD.HandSignDetector.run"
+    exitpoint: ""
+    next:
+      - "output:video_output"
+      - "service:template"
+service:
+  - name: "template"
+    entrypoint: "template_service.template_service.TemplateService.run"
+    exitpoint: ""
+    next:
+      - "output:websocket"
+output:
+  - name: "websocket"
+    entrypoint: "websocket_output.WebsocketOutput.send"
+    exitpoint: ""
+  - name: "video_output"
+    entrypoint: "video_output.VideoOutput.play"
+    exitpoint: "video_output.VideoOutput.stop"
